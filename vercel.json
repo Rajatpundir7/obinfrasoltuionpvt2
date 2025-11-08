@@ -9,7 +9,15 @@
       "destination": "/about/index.html"
     },
     {
+      "source": "/about/",
+      "destination": "/about/index.html"
+    },
+    {
       "source": "/services",
+      "destination": "/services/index.html"
+    },
+    {
+      "source": "/services/",
       "destination": "/services/index.html"
     },
     {
@@ -17,7 +25,15 @@
       "destination": "/projects/index.html"
     },
     {
+      "source": "/projects/",
+      "destination": "/projects/index.html"
+    },
+    {
       "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/contact/",
       "destination": "/contact/index.html"
     },
     {
@@ -25,7 +41,15 @@
       "destination": "/compliance/index.html"
     },
     {
+      "source": "/compliance/",
+      "destination": "/compliance/index.html"
+    },
+    {
       "source": "/faqs",
+      "destination": "/faqs/index.html"
+    },
+    {
+      "source": "/faqs/",
       "destination": "/faqs/index.html"
     },
     {
@@ -33,19 +57,16 @@
       "destination": "/privacy/index.html"
     },
     {
+      "source": "/privacy/",
+      "destination": "/privacy/index.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms/index.html"
-    }
-  ],
-  "headers": [
+    },
     {
-      "source": "/assets/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000"
-        }
-      ]
+      "source": "/terms/",
+      "destination": "/terms/index.html"
     }
   ]
 }
