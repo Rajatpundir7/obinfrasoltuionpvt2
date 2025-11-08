@@ -1,3 +1,7 @@
+# Ignore legacy PHP files to avoid filename conflicts with serverless functions
+api/contact.php
+legacy_api/
+*.php
 node_modules
 .git
 .env

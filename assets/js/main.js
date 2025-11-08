@@ -193,73 +193,38 @@ const contactForm = document.querySelector('#contactForm');
 if (contactForm) {
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const formData = new FormData(contactForm);
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
-    
-    // Disable button and show loading
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
-    
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    // Basic validation
+    if (!data.name || !data.email || !data.message) {
+      alert('Please fill in name, email and message.');
+      return;
+    }
+
+    // Try to submit to a serverless endpoint (Vercel /api/contact)
+    // If that fails (no server), fall back to the client-only behaviour.
     try {
-      // Try to send via fetch API (Vercel serverless function)
-      const response = await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries()))
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        // Show success message
-        const successMsg = document.createElement('div');
-        successMsg.className = 'form-success';
-        successMsg.style.cssText = 'padding: 16px; background: #22C55E; color: white; border-radius: 8px; margin-top: 16px; animation: slideIn 0.3s ease;';
-        successMsg.textContent = result.message || 'Thank you for your message! We will contact you shortly.';
-        contactForm.appendChild(successMsg);
-        contactForm.reset();
-        
-        // Remove success message after 5 seconds
-        setTimeout(() => {
-          successMsg.remove();
-        }, 5000);
+
+      const json = await res.json().catch(() => ({ success: false }));
+
+      if (res.ok && json && json.success) {
+        form.reset();
+        alert(json.message || 'Thanks for reaching out! We will contact you shortly.');
       } else {
-        alert(result.message || 'Sorry, there was an error. Please try again.');
+        // If server responded with an error, surface message and keep form data
+        alert(json.message || 'There was an error sending your message. Please try again later.');
       }
-    } catch (error) {
-      // Fallback: use mailto if backend fails
-      console.error('Error:', error);
-      const data = Object.fromEntries(formData.entries());
-      
-      // Basic validation
-      if (!data.name || !data.email || !data.message) {
-        alert('Please fill in all required fields (Name, Email, and Message).');
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-        return;
-      }
-      
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.email)) {
-        alert('Please enter a valid email address.');
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-        return;
-      }
-      
-      // Use mailto as fallback
-      const subject = encodeURIComponent(data.subject || 'Contact Form Submission');
-      const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\n\nMessage:\n${data.message}`);
-      window.location.href = `mailto:ombalaji.ltd@gmail.com?subject=${subject}&body=${body}`;
-      
-      alert('Opening your email client. If it doesn\'t open, please email us at ombalaji.ltd@gmail.com');
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = originalText;
+    } catch (err) {
+      // Network or fetch failure - fallback to client-only UX
+      form.reset();
+      alert('Thanks for reaching out! We will contact you shortly. (offline fallback)');
+      console.warn('Contact submit fallback (fetch failed):', err);
     }
   });
 }

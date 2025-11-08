@@ -1,72 +1,8 @@
 {
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/about",
-      "destination": "/about/index.html"
-    },
-    {
-      "source": "/about/",
-      "destination": "/about/index.html"
-    },
-    {
-      "source": "/services",
-      "destination": "/services/index.html"
-    },
-    {
-      "source": "/services/",
-      "destination": "/services/index.html"
-    },
-    {
-      "source": "/projects",
-      "destination": "/projects/index.html"
-    },
-    {
-      "source": "/projects/",
-      "destination": "/projects/index.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/contact/index.html"
-    },
-    {
-      "source": "/contact/",
-      "destination": "/contact/index.html"
-    },
-    {
-      "source": "/compliance",
-      "destination": "/compliance/index.html"
-    },
-    {
-      "source": "/compliance/",
-      "destination": "/compliance/index.html"
-    },
-    {
-      "source": "/faqs",
-      "destination": "/faqs/index.html"
-    },
-    {
-      "source": "/faqs/",
-      "destination": "/faqs/index.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/privacy/index.html"
-    },
-    {
-      "source": "/privacy/",
-      "destination": "/privacy/index.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/terms/index.html"
-    },
-    {
-      "source": "/terms/",
-      "destination": "/terms/index.html"
-    }
+  "version": 2,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

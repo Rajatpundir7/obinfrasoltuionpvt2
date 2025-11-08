@@ -1,11 +1,13 @@
 {
   "name": "ombalaji-infra-website",
   "version": "1.0.0",
+  "private": true,
   "description": "OMBALAJI INFRA SOLUTION PRIVATE LIMITED - Official Website",
   "scripts": {
     "dev": "vercel dev",
-    "build": "echo 'No build step required'",
-    "start": "vercel dev"
+    "build": "echo \"No build step required\"",
+    "start": "vercel dev",
+    "vercel-build": "echo \"No build needed\""
   },
   "keywords": [
     "infrastructure",
@@ -20,7 +22,7 @@
     "@vercel/node": "^3.0.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   }
 }
 
