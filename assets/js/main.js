@@ -43,6 +43,7 @@ function toggleMenu(open) {
   mobileMenu?.classList.toggle('open', isOpen);
   overlay?.classList.toggle('show', isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
+  document.body.classList.toggle('menu-open', isOpen);
   if (menuBtn) {
     menuBtn.textContent = isOpen ? '✕' : '☰';
   }

@@ -46,6 +46,7 @@ class GalleryLightbox {
   }
 
   attachListeners() {
+    // Attach to gallery items and project cards
     document.querySelectorAll('.gallery-item, .project-card').forEach((item, index) => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
@@ -57,6 +58,39 @@ class GalleryLightbox {
               alt: img.alt || ''
             }));
           this.currentIndex = this.images.findIndex(imgObj => imgObj.src === img.src);
+          if (this.currentIndex === -1) this.currentIndex = index;
+          this.open();
+        }
+      });
+    });
+
+    // Attach to all project images with clickable class
+    document.querySelectorAll('.project-image-clickable').forEach((img, index) => {
+      img.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Get all project images from the same section or all project images
+        const section = img.closest('section');
+        let imagesToUse = [];
+        
+        if (section) {
+          // Get images from current section
+          imagesToUse = Array.from(section.querySelectorAll('.project-image-clickable'))
+            .map(img => ({
+              src: img.src,
+              alt: img.alt || ''
+            }));
+        } else {
+          // Fallback: get all project images
+          imagesToUse = Array.from(document.querySelectorAll('.project-image-clickable'))
+            .map(img => ({
+              src: img.src,
+              alt: img.alt || ''
+            }));
+        }
+        
+        if (imagesToUse.length > 0) {
+          this.images = imagesToUse;
+          this.currentIndex = imagesToUse.findIndex(imgObj => imgObj.src === img.src);
           if (this.currentIndex === -1) this.currentIndex = index;
           this.open();
         }

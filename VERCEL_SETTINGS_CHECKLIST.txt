@@ -1,0 +1,47 @@
+========================================
+🚨 CRITICAL: VERCEL SETTINGS CHECKLIST
+========================================
+
+THIS IS LIKELY CAUSING YOUR 404 ERROR!
+
+Go to: Vercel Dashboard → Your Project → Settings → General
+
+CHECK THESE SETTINGS:
+
+1. Framework Preset
+   ✅ Must be: "Other"
+   ❌ Wrong: Next.js, React, Vue, etc.
+
+2. Root Directory (MOST IMPORTANT!)
+   ✅ Must be: ./ (completely EMPTY)
+   ❌ Wrong: ./dist, ./build, ./public, or anything else
+
+3. Build Command
+   ✅ Must be: (empty)
+   ❌ Wrong: npm run build or anything
+
+4. Output Directory
+   ✅ Must be: (empty)
+   ❌ Wrong: dist, build, out, or anything
+
+5. Install Command
+   ✅ Can be: (empty) or "npm install"
+
+========================================
+AFTER FIXING:
+========================================
+
+1. Click "Save"
+2. Go to "Deployments" tab
+3. Click "Redeploy" on latest deployment
+4. Wait 2-3 minutes
+5. Test your site - should work!
+
+========================================
+YOUR SITE WILL BE AT:
+========================================
+
+https://your-project-name.vercel.app
+
+========================================
+
