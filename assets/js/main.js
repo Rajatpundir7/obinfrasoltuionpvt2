@@ -40,12 +40,25 @@ const overlay = document.querySelector('#overlay');
 
 function toggleMenu(open) {
   const isOpen = open ?? !mobileMenu?.classList.contains('open');
-  mobileMenu?.classList.toggle('open', isOpen);
-  overlay?.classList.toggle('show', isOpen);
+  
+  if (mobileMenu) {
+    mobileMenu.classList.toggle('open', isOpen);
+    // Ensure menu is visible when open
+    if (isOpen) {
+      mobileMenu.style.visibility = 'visible';
+    }
+  }
+  
+  if (overlay) {
+    overlay.classList.toggle('show', isOpen);
+  }
+  
   document.body.style.overflow = isOpen ? 'hidden' : '';
   document.body.classList.toggle('menu-open', isOpen);
+  
   if (menuBtn) {
     menuBtn.textContent = isOpen ? '✕' : '☰';
+    menuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   }
 }
 
@@ -56,6 +69,28 @@ overlay?.addEventListener('click', () => toggleMenu(false));
 document.querySelectorAll('.mobile-links a').forEach(link => {
   link.addEventListener('click', () => toggleMenu(false));
 });
+
+// Highlight current page in mobile menu
+function highlightCurrentPage() {
+  const currentPath = window.location.pathname;
+  const mobileLinks = document.querySelectorAll('.mobile-links a');
+  
+  mobileLinks.forEach(link => {
+    const linkPath = new URL(link.href).pathname;
+    // Remove active class from all links
+    link.classList.remove('active');
+    
+    // Check if current path matches link path
+    if (currentPath === linkPath || 
+        (currentPath === '/' && linkPath === '/') ||
+        (currentPath.startsWith(linkPath) && linkPath !== '/' && linkPath.length > 1)) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', highlightCurrentPage);
 
 // FAQ accordion
 document.querySelectorAll('.accordion').forEach(acc => {
